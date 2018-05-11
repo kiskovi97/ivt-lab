@@ -140,7 +140,6 @@ public class GT4500Test {
         // Arrange
 
         when(prim.isEmpty()).thenReturn(false);
-
         when(prim.fire(1)).thenReturn(true);
         when(sec.isEmpty()).thenReturn(true);
         // Act
@@ -152,5 +151,24 @@ public class GT4500Test {
         verify(prim, times(2)).fire(1);
         verify(sec, times(0)).fire(1);
     }
+
+    @Test
+    public void fireTorpedo_SINGLE_SecondEmpty02(){
+        // Arrange
+
+        when(prim.isEmpty()).thenReturn(false);
+        when(prim.fire(1)).thenReturn(true);
+        when(sec.isEmpty()).thenReturn(true);
+        ship.fireTorpedo(FiringMode.SINGLE);
+        when(prim.isEmpty()).thenReturn(true);
+        // Act
+
+        boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+        // Assert
+        assertEquals(false, result);
+        verify(prim, times(1)).fire(1);
+        verify(sec, times(0)).fire(1);
+    }
+
 
 }
