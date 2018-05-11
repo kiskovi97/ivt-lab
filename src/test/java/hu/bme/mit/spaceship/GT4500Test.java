@@ -127,5 +127,30 @@ public class GT4500Test {
         verify(prim, times(0)).fire(1);
         verify(sec, times(1)).fire(1);
     }
+    @Test
+    public void fireLaser(){
+        // Act
+        boolean result = ship.fireLaser(FiringMode.ALL);
+
+        // Assert
+        assertEquals(false, result);
+    }
+    @Test
+    public void fireTorpedo_SINGLE_SecondEmpty(){
+        // Arrange
+
+        when(prim.isEmpty()).thenReturn(false);
+
+        when(prim.fire(1)).thenReturn(true);
+        when(sec.isEmpty()).thenReturn(true);
+        // Act
+        boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+        boolean result2 = ship.fireTorpedo(FiringMode.SINGLE);
+        // Assert
+        assertEquals(true, result);
+        assertEquals(true, result2);
+        verify(prim, times(2)).fire(1);
+        verify(sec, times(0)).fire(1);
+    }
 
 }
